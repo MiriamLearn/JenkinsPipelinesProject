@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'REPO_URL',defaultValue: 'https://github.com/MiriamLearn/JenkinsPipelinesProject', description: 'GitHub repository URL')
+        string(name: 'REPO_URL', defaultValue: 'https://github.com/MiriamLearn/JenkinsPipelinesProject', description: 'GitHub repository URL')
         string(name: 'NAME_BRANCH', defaultValue: 'main', description: 'Branch name to build')
     }
 
@@ -11,13 +11,15 @@ pipeline {
     }
 
     triggers {
-        cron('30 5 * * 1') // ימי שני 05:30
-        cron('0 14 * * *') // כל יום 14:00
+        cron('30 5 * * 1') // לדוגמה: ימי שני 05:30
     }
 
     stages {
 
         stage('Checkout Code') {
+            options {
+                timeout(time: 5, unit: 'MINUTES')
+            }
             steps {
                 script {
                     echo "Starting checkout stage"
@@ -31,25 +33,28 @@ pipeline {
                     echo "Checkout stage completed successfully"
                 }
             }
-            timeout(time: 5, unit: 'MINUTES')
         }
 
         stage('Compile') {
+            options {
+                timeout(time: 5, unit: 'MINUTES')
+            }
             steps {
                 echo "Starting compilation stage"
                 sh 'mvn compile'
                 echo "Compilation stage completed successfully"
             }
-            timeout(time: 5, unit: 'MINUTES')
         }
 
         stage('Run Tests') {
+            options {
+                timeout(time: 5, unit: 'MINUTES')
+            }
             steps {
                 echo "Starting test stage"
                 sh 'mvn test'
                 echo "Test stage completed successfully"
             }
-            timeout(time: 5, unit: 'MINUTES')
         }
     }
 
@@ -62,3 +67,4 @@ pipeline {
         }
     }
 }
+
