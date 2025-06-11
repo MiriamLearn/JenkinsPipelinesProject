@@ -11,7 +11,7 @@ pipeline {
     }
 
     triggers {
-        cron('30 5 * * 1') // לדוגמה: ימי שני 05:30
+        cron('30 5 * * 1\n0 14 * * *')
     }
 
     stages {
